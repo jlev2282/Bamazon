@@ -45,13 +45,14 @@ var Inventory = function(){
 						}
 					}).then(function(answer){
 						if(chosenItem.stock_quantity > parseInt(answer.howMany)){
-							connection.query("UPDATE auctions SET ? WHERE ?",[{
-								stock_quantity: answer.howMany
+							connection.query("UPDATE products SET ? WHERE ?",[{
+								stock_quantity: chosenItem.stock_quantity-answer.howMany
 							},{
 								id:chosenItem.id
 							}], function(err,res){
+								if (err)console.log(err);
 								console.log("Order successfully placed!");
-								start();
+								Inventory();
 							});
 						} else {
 							console.log("There was insufficient inventory to fulfill your request. Try again...");
