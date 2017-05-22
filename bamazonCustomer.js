@@ -43,6 +43,20 @@ var Inventory = function(){
 								return false;
 							}
 						}
+					}).then(function(answer){
+						if(chosenItem.stock_quantity > parseInt(answer.howMany)){
+							connection.query("UPDATE auctions SET ? WHERE ?",[{
+								stock_quantity: answer.howMany
+							},{
+								id:chosenItem.id
+							}], function(err,res){
+								console.log("Order successfully placed!");
+								start();
+							});
+						} else {
+							console.log("There was insufficient inventory to fulfill your request. Try again...");
+							bidAuction();
+						}
 					})
 				}
 			}
