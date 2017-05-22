@@ -56,7 +56,7 @@ var Inventory = function(){
 							});
 						} else {
 							console.log("There was insufficient inventory to fulfill your request. Try again...");
-							bidAuction();
+							Inventory();
 						}
 					})
 				}
